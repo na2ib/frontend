@@ -1,18 +1,15 @@
-const API_KEY = "7a359a0a7509221e1f0ec214e5e08b6d";
-const BASE_URL = "https://api.themoviedb.org/3";
+const BASE_URL = "https://api.jikan.moe/v4";
 
 export const getPopularMovies = async () => {
-  const response = await fetch(`${BASE_URL}/movie/popular?api_key=${API_KEY}`);
+  const response = await fetch(`${BASE_URL}/top/manga`);
   const data = await response.json();
-  return data.results;
+  return data.data;
 };
 
 export const searchMovies = async (query) => {
   const response = await fetch(
-    `${BASE_URL}/search/movie?api_key=${API_KEY}&query=${encodeURIComponent(
-      query
-    )}`
+    `${BASE_URL}/manga?q=${encodeURIComponent(query)}&limit=25`
   );
   const data = await response.json();
-  return data.results;
+  return data.data;
 };
