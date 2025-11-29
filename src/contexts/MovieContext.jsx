@@ -5,38 +5,42 @@ const MovieContext = createContext();
 export const useMovieContext = () => useContext(MovieContext);
 
 export const MovieProvider = ({ children }) => {
-  const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState([]);
 
-  useEffect(() => {
-    const storedFavs = localStorage.getItem("favorites");
+  useEffect(() => {
+    const storedFavs = localStorage.getItem("favorites");
 
-    if (storedFavs) setFavorites(JSON.parse(storedFavs));
-  }, []);
+    if (storedFavs) setFavorites(JSON.parse(storedFavs));
+  }, []);
 
-  useEffect(() => {
-    localStorage.setItem("favorites", JSON.stringify(favorites));
-  }, [favorites]);
+  useEffect(() => {
+    localStorage.setItem("favorites", JSON.stringify(favorites));
+  }, [favorites]);
 
-  const addToFavorites = (movie) => {
-    setFavorites((prev) => [...prev, movie]);
-  };
+  const addToFavorites = (movie) => {
+    setFavorites((prev) => [...prev, movie]);
+  };
 
-  const removeFromFavorites = (movieId) => {
-    setFavorites((prev) => prev.filter((movie) => movie.id !== movieId));
-  };
+  const removeFromFavorites = (mangaId) => {
+    setFavorites((prev) => 
+        prev.filter((manga) => manga.mal_id !== mangaId)
+    );
+  };
 
-  const isFavorite = (movieId) => {
-    return favorites.some((movie) => movie.id === movieId);
-  };
+  const isFavorite = (mangaId) => {
+    return (
+        favorites.some((manga) => manga.mal_id === mangaId)
+    );
+  };
 
-  const value = {
-    favorites,
-    addToFavorites,
-    removeFromFavorites,
-    isFavorite,
-  };
+  const value = {
+    favorites,
+    addToFavorites,
+    removeFromFavorites,
+    isFavorite,
+  };
 
-  return (
-    <MovieContext.Provider value={value}>{children}</MovieContext.Provider>
-  );
+  return (
+    <MovieContext.Provider value={value}>{children}</MovieContext.Provider>
+  );
 };
